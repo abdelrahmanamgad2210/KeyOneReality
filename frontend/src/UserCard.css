@@ -1,0 +1,40 @@
+import React from "react";
+
+const UserCard = ({ user, onEdit, onDelete }) => {
+  return (
+    <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center hover:shadow-lg transition-shadow">
+      <img
+        src={
+          user.profilePicture
+            ? `http://localhost:5000/${user.profilePicture}`
+            : "/default-avatar.png"
+        }
+        alt={user.name}
+        className="w-24 h-24 rounded-full object-cover mb-4"
+      />
+      <div className="text-center">
+        <h3 className="text-lg font-semibold text-gray-800">{user.name}</h3>
+        <p className="text-gray-600 text-sm">Email: {user.email}</p>
+        <p className="text-gray-600 text-sm">Phone: {user.phoneNumber}</p>
+        <p className="text-gray-600 text-sm">Department: {user.department}</p>
+        <p className="text-gray-600 text-sm">Division: {user.division}</p>
+      </div>
+      <div className="mt-4 flex space-x-3">
+        <button
+          onClick={() => onEdit(user)}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => onDelete(user._id)}
+          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default UserCard;
