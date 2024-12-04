@@ -71,28 +71,38 @@ const getUserById = async (req, res) => {
 
 //update user
 const updateUser = async (req, res) => {
-    try {
-      const { name, email, phoneNumber, department, division, profilePicture } = req.body;
-  
-      // Optional: Add validation for fields
-      if (!name && !email && !phoneNumber && !department && !division && !profilePicture) {
-        return res.status(400).json({ error: "No valid fields provided for update" });
+  try {
+      const { name, email, phoneNumber, department, division } = req.body;
+
+      const updates = {};
+      if (name) updates.name = name;
+      if (email) updates.email = email;
+      if (phoneNumber) updates.phoneNumber = phoneNumber;
+      if (department) updates.department = department;
+      if (division) updates.division = division;
+      if (req.file) updates.profilePicture = req.file.path; // Handle file upload
+
+      if (Object.keys(updates).length === 0) {
+          return res.status(400).json({ error: "No valid fields provided for update" });
       }
-  
-      const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-  
+
+      const user = await User.findByIdAndUpdate(req.params.id, updates, {
+          new: true,
+          runValidators: true,
+      });
+
       if (!user) {
-        return res.status(404).json({ error: "User not found" });
+          return res.status(404).json({ error: "User not found" });
       }
-  
+
       res.status(200).json(user);
-    } catch (error) {
+  } catch (error) {
       if (error.name === "CastError") {
-        return res.status(400).json({ error: "Invalid user ID format" });
+          return res.status(400).json({ error: "Invalid user ID format" });
       }
       res.status(500).json({ error: error.message });
-    }
-  };  
+  }
+};
 
 
 
