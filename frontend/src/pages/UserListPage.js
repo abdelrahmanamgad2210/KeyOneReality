@@ -42,6 +42,12 @@ const UserListPage = () => {
     }
   };
 
+//add user
+const handleAdd = () => {
+  navigate("/add"); // Ensure this route is correctly handled in your routing setup
+};
+
+  //edit user
   const handleEdit = (user) => {
     console.log("Edit user:", user);
     navigate(`/edit/${user._id}`); // Navigate to the edit page with the user's ID
@@ -63,15 +69,30 @@ const UserListPage = () => {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Meet the Team</h1>
-      
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">Meet the Team</h1>
+
+      <div className="flex justify-end mb-6 space-x-4">
+        <button
+          onClick={() => navigate("/")}
+          className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
+        >
+          Main Page
+        </button>
+        <button
+          onClick={() => handleAdd()}
+          className="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600"
+        >
+          Add User
+        </button>
+      </div>
+
       {/* Division Filter Dropdown */}
-      <div className="mb-4">
+      <div className="flex justify-center mb-4">
         <select
           value={selectedDivision}
           onChange={handleDivisionChange}
-          className="p-2 border rounded w-full sm:w-auto"
+          className="p-3 border border-gray-300 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All Divisions</option>
           <option value="Holiday Homes">Holiday Homes</option>
@@ -83,7 +104,9 @@ const UserListPage = () => {
 
       {/* User Grid */}
       {loading ? (
-        <p>Loading users...</p>
+        <div className="flex justify-center items-center h-64">
+          <p className="text-lg text-gray-700">Loading users...</p>
+        </div>
       ) : filteredUsers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredUsers.map((user) => (
@@ -96,7 +119,9 @@ const UserListPage = () => {
           ))}
         </div>
       ) : (
-        <p>No users found for the selected division.</p>
+        <div className="flex justify-center items-center h-64">
+          <p className="text-lg text-gray-700">No users found for the selected division.</p>
+        </div>
       )}
     </div>
   );
