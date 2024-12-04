@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const AddEditUser = () => {
   const { id } = useParams(); // Check for ID in the route (edit mode)
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,26 +57,27 @@ const AddEditUser = () => {
     }
 
     try {
-        const url = isEditMode
-            ? `http://localhost:5000/api/users/${id}`
-            : "http://localhost:5000/api/users/create";
-
-        const method = isEditMode ? "put" : "post";
-
-        const response = await axios({
-            method,
-            url,
-            data,
-            headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        alert(`${isEditMode ? "User updated" : "User added"} successfully!`);
-        navigate("/"); // Redirect to home
+        if (isEditMode) {
+            // Update user logic
+            await axios.put(`http://localhost:5000/api/users/${id}`, data, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            alert("User updated successfully!");
+        } else {
+            // Add user logic
+            await axios.post("http://localhost:5000/api/users/create", data, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            alert("User added successfully!");
+        }
+        // Redirect back to the user list page
+        window.location.href = "/"; // Replace with `navigate("/")` if using react-router-dom v6+
     } catch (error) {
-        console.error("Error saving user:", error.response?.data || error.message);
-        alert("Failed to save user. Check console for more details.");
+        console.error("Error saving user:", error);
+        alert("An error occurred while saving the user.");
     }
 };
+
 
   return (
     <div className="p-6">
