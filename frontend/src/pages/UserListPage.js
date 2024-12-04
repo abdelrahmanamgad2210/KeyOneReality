@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserCard from "../components/UserCard";
+import { useNavigate } from "react-router-dom";
 
 const UserListPage = () => {
   const [users, setUsers] = useState([]); // All users
   const [filteredUsers, setFilteredUsers] = useState([]); // Filtered users
   const [loading, setLoading] = useState(true);
   const [selectedDivision, setSelectedDivision] = useState(""); // Current filter
+  const navigate = useNavigate();
 
   // Fetch users from the backend
   useEffect(() => {
@@ -42,7 +44,7 @@ const UserListPage = () => {
 
   const handleEdit = (user) => {
     console.log("Edit user:", user);
-    // Logic for editing user
+    navigate(`/edit/${user._id}`); // Navigate to the edit page with the user's ID
   };
 
   const handleDelete = (id) => {
