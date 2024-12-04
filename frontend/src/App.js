@@ -1,20 +1,17 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserListPage from "./pages/UserListPage";
 import AddEditUser from "./components/AddEditUser";
-import Navbar from "./components/Navbar";
+import MeetTheTeam from "./pages/MeetTheTeam";
 
-function App() {
-  return (
-    <Router>
-      <Navbar title="CRM System" />
-      <Routes>
-        <Route path="/" element={<UserListPage />} />
-        <Route path="/add" element={<AddEditUser />} />
-        <Route path="/edit/:id" element={<AddEditUser />} />
-      </Routes>
-    </Router>
-  );
-}
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<MeetTheTeam />} />
+      <Route path="/admin" element={<UserListPage />} />
+      <Route path="/edit/:id" element={<AddEditUser />} />
+      <Route path="/add" element={<AddEditUser />} />
+    </Routes>
+  </Router>
+);
 
 export default App;
