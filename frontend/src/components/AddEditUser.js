@@ -48,31 +48,36 @@ const AddEditUser = () => {
     e.preventDefault();
 
     const data = new FormData();
-    for (const key in formData) {
-      if (key === "profilePicture" && formData.profilePicture instanceof File) {
-        data.append(key, formData.profilePicture);
-      } else {
-        data.append(key, formData[key]);
-      }
+    if (formData.name) data.append("name", formData.name);
+    if (formData.email) data.append("email", formData.email);
+    if (formData.phoneNumber) data.append("phoneNumber", formData.phoneNumber);
+    if (formData.department) data.append("department", formData.department);
+    if (formData.division) data.append("division", formData.division);
+    if (formData.profilePicture instanceof File) {
+        data.append("profilePicture", formData.profilePicture);
     }
 
     try {
-      if (isEditMode) {
-        await axios.put(`http://localhost:5000/api/users/${id}`, data, {
-          headers: { "Content-Type": "multipart/form-data" },
+        const url = isEditMode
+            ? `http://localhost:5000/api/users/${id}`
+            : "http://localhost:5000/api/users/create";
+
+        const method = isEditMode ? "put" : "post";
+
+        const response = await axios({
+            method,
+            url,
+            data,
+            headers: { "Content-Type": "multipart/form-data" },
         });
-        alert("User updated successfully!");
-      } else {
-        await axios.post("http://localhost:5000/api/users/create", data, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        alert("User added successfully!");
-      }
-      navigate("/");
+
+        alert(`${isEditMode ? "User updated" : "User added"} successfully!`);
+        navigate("/"); // Redirect to home
     } catch (error) {
-      console.error("Error saving user:", error);
+        console.error("Error saving user:", error.response?.data || error.message);
+        alert("Failed to save user. Check console for more details.");
     }
-  };
+};
 
   return (
     <div className="p-6">
