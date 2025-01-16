@@ -1,6 +1,9 @@
 CRM System
 
+
 ## Overview
+
+
 The CRM System is a web application built using the **MERN stack** (MongoDB, Express.js, React, Node.js) that allows managing user data. Users can perform **CRUD operations** (Create, Read, Update, Delete) with a visually appealing interface.
 
 The app includes features such as filtering users by division, uploading profile pictures, and responsive design for seamless usage across devices.
