@@ -9,6 +9,8 @@ The CRM System is a web application built using the **MERN stack** (MongoDB, Exp
 The app includes features such as filtering users by division, uploading profile pictures, and responsive design for seamless usage across devices.
 
 ---
+## Demo
+[Watch the demo video](https://github.com/abdelrahmanamgad2210/KeyOneReality/raw/main/videos/demo.mp4)
 
 ## Features
 User Management:
